@@ -1,8 +1,8 @@
 ﻿{
     "productName":  "DJ Electric Invoice Generator",
-    "version":  "1.0.0",
-    "publishedAtUtc":  "2026-03-15T19:04:29.7157948Z",
+    "version":  "1.0.1",
+    "publishedAtUtc":  "2026-03-15T19:10:26.9723610Z",
     "packageUrl":  "downloads/app-package.zip",
     "installerUrl":  "downloads/DJ-Electric-Invoice-Generator-Setup.zip",
-    "releaseNotes":  "Initial public release."
+    "releaseNotes":  "1.0.1 fixes installed-app rendering by switching to standard Windows fonts and layout-safe rendering settings."
 }
