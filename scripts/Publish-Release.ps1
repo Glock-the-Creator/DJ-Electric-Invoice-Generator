@@ -179,8 +179,8 @@ $releaseManifest = [ordered]@{
     productName    = "DJ Electric Invoice Generator"
     version        = $resolvedVersion
     publishedAtUtc = (Get-Date).ToUniversalTime().ToString("o")
-    packageUrl     = "downloads/app-package.zip"
-    installerUrl   = "downloads/DJ-Electric-Invoice-Generator-Setup.zip"
+    packageUrl     = "downloads/app-package.zip?v=$resolvedVersion"
+    installerUrl   = "downloads/DJ-Electric-Invoice-Generator-Setup.zip?v=$resolvedVersion"
     releaseNotes   = $ReleaseNotes
 }
 

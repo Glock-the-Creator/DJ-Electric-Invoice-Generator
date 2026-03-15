@@ -1,8 +1,8 @@
 ﻿{
     "productName":  "DJ Electric Invoice Generator",
-    "version":  "1.0.2",
-    "publishedAtUtc":  "2026-03-15T19:13:44.9405476Z",
-    "packageUrl":  "downloads/app-package.zip",
-    "installerUrl":  "downloads/DJ-Electric-Invoice-Generator-Setup.zip",
-    "releaseNotes":  "1.0.2 fixes the updater argument bug caused by a quoted install path ending with a trailing slash."
+    "version":  "1.0.3",
+    "publishedAtUtc":  "2026-03-15T19:18:38.5073698Z",
+    "packageUrl":  "downloads/app-package.zip?v=1.0.3",
+    "installerUrl":  "downloads/DJ-Electric-Invoice-Generator-Setup.zip?v=1.0.3",
+    "releaseNotes":  "1.0.3 fixes the installer layout on scaled displays and adds cache-busted download links so you get the latest setup zip."
 }

@@ -18,11 +18,13 @@ internal sealed class InstallerForm : Form
 
         Text = InstallService.ProductName;
         StartPosition = FormStartPosition.CenterScreen;
-        ClientSize = new Size(520, 250);
-        MinimumSize = new Size(520, 250);
+        AutoScaleMode = AutoScaleMode.Dpi;
+        ClientSize = new Size(660, 320);
+        MinimumSize = new Size(660, 320);
         MaximizeBox = false;
-        FormBorderStyle = FormBorderStyle.FixedDialog;
+        FormBorderStyle = FormBorderStyle.Sizable;
         BackColor = ColorTranslator.FromHtml("#F7F4EC");
+        Padding = new Padding(24);
 
         var titleLabel = new Label
         {
@@ -30,17 +32,19 @@ internal sealed class InstallerForm : Form
             Font = new Font("Segoe UI Semibold", 16f, FontStyle.Bold),
             ForeColor = ColorTranslator.FromHtml("#1F2530"),
             AutoSize = true,
-            Location = new Point(24, 20)
+            Dock = DockStyle.Fill,
+            Margin = new Padding(0, 0, 0, 8)
         };
 
         var helperLabel = new Label
         {
             Text = "Install the app locally and choose whether to place a shortcut on the desktop.",
-            Font = new Font("Segoe UI", 9.5f, FontStyle.Regular),
+            Font = new Font("Segoe UI", 10f, FontStyle.Regular),
             ForeColor = ColorTranslator.FromHtml("#5B6472"),
-            AutoSize = false,
-            Size = new Size(460, 36),
-            Location = new Point(24, 58)
+            AutoSize = true,
+            MaximumSize = new Size(560, 0),
+            Dock = DockStyle.Fill,
+            Margin = new Padding(0, 0, 0, 20)
         };
 
         var pathLabel = new Label
@@ -49,25 +53,20 @@ internal sealed class InstallerForm : Form
             Font = new Font("Segoe UI", 9.5f, FontStyle.Regular),
             ForeColor = ColorTranslator.FromHtml("#5B6472"),
             AutoSize = true,
-            Location = new Point(24, 102)
+            Dock = DockStyle.Fill,
+            Margin = new Padding(0, 0, 0, 6)
         };
 
         installPathTextBox = new TextBox
         {
             Text = options.InstallDirectory,
-            Location = new Point(24, 124),
-            Size = new Size(364, 27)
+            Dock = DockStyle.Fill,
+            Margin = new Padding(0, 0, 12, 0)
         };
 
-        browseButton = new Button
-        {
-            Text = "Browse",
-            Location = new Point(396, 122),
-            Size = new Size(90, 30),
-            BackColor = ColorTranslator.FromHtml("#F2E4C1"),
-            FlatStyle = FlatStyle.Flat
-        };
-        browseButton.FlatAppearance.BorderSize = 0;
+        browseButton = CreateSecondaryButton("Browse");
+        browseButton.Width = 112;
+        browseButton.Dock = DockStyle.Fill;
         browseButton.Click += BrowseButton_Click;
 
         desktopShortcutCheckBox = new CheckBox
@@ -75,8 +74,9 @@ internal sealed class InstallerForm : Form
             Text = "Create desktop shortcut",
             Checked = true,
             AutoSize = true,
-            Location = new Point(24, 166),
-            ForeColor = ColorTranslator.FromHtml("#1F2530")
+            Dock = DockStyle.Fill,
+            ForeColor = ColorTranslator.FromHtml("#1F2530"),
+            Margin = new Padding(0, 14, 0, 0)
         };
 
         statusLabel = new Label
@@ -86,31 +86,65 @@ internal sealed class InstallerForm : Form
                 : $"Place {InstallService.PackageFileName} next to this setup app before installing.",
             Font = new Font("Segoe UI", 9f, FontStyle.Regular),
             ForeColor = ColorTranslator.FromHtml("#8B5E1A"),
-            AutoSize = false,
-            Size = new Size(460, 36),
-            Location = new Point(24, 192)
+            AutoSize = true,
+            MaximumSize = new Size(420, 0),
+            Dock = DockStyle.Fill,
+            Margin = new Padding(0, 0, 16, 0)
         };
 
-        installButton = new Button
-        {
-            Text = "Install",
-            Location = new Point(376, 205),
-            Size = new Size(110, 34),
-            BackColor = ColorTranslator.FromHtml("#1F2530"),
-            ForeColor = Color.White,
-            FlatStyle = FlatStyle.Flat
-        };
-        installButton.FlatAppearance.BorderSize = 0;
+        installButton = CreatePrimaryButton("Install");
+        installButton.Width = 132;
+        installButton.Height = 38;
+        installButton.Anchor = AnchorStyles.Right | AnchorStyles.Top;
         installButton.Click += InstallButton_Click;
 
-        Controls.Add(titleLabel);
-        Controls.Add(helperLabel);
-        Controls.Add(pathLabel);
-        Controls.Add(installPathTextBox);
-        Controls.Add(browseButton);
-        Controls.Add(desktopShortcutCheckBox);
-        Controls.Add(statusLabel);
-        Controls.Add(installButton);
+        AcceptButton = installButton;
+
+        var pathPanel = new TableLayoutPanel
+        {
+            ColumnCount = 2,
+            Dock = DockStyle.Fill,
+            Margin = new Padding(0)
+        };
+        pathPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
+        pathPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        pathPanel.Controls.Add(installPathTextBox, 0, 0);
+        pathPanel.Controls.Add(browseButton, 1, 0);
+
+        var footerPanel = new TableLayoutPanel
+        {
+            ColumnCount = 2,
+            Dock = DockStyle.Fill,
+            Margin = new Padding(0)
+        };
+        footerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
+        footerPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        footerPanel.Controls.Add(statusLabel, 0, 0);
+        footerPanel.Controls.Add(installButton, 1, 0);
+
+        var layout = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            ColumnCount = 1,
+            RowCount = 6,
+            BackColor = Color.Transparent
+        };
+        layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
+        layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
+
+        layout.Controls.Add(titleLabel, 0, 0);
+        layout.Controls.Add(helperLabel, 0, 1);
+        layout.Controls.Add(pathLabel, 0, 2);
+        layout.Controls.Add(pathPanel, 0, 3);
+        layout.Controls.Add(desktopShortcutCheckBox, 0, 4);
+        layout.Controls.Add(footerPanel, 0, 5);
+
+        Controls.Add(layout);
     }
 
     private void BrowseButton_Click(object? sender, EventArgs e)
@@ -176,5 +210,35 @@ internal sealed class InstallerForm : Form
             installButton.Enabled = true;
             browseButton.Enabled = true;
         }
+    }
+
+    private static Button CreatePrimaryButton(string text)
+    {
+        var button = new Button
+        {
+            Text = text,
+            BackColor = ColorTranslator.FromHtml("#1F2530"),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Margin = new Padding(0)
+        };
+
+        button.FlatAppearance.BorderSize = 0;
+        return button;
+    }
+
+    private static Button CreateSecondaryButton(string text)
+    {
+        var button = new Button
+        {
+            Text = text,
+            BackColor = ColorTranslator.FromHtml("#F2E4C1"),
+            ForeColor = ColorTranslator.FromHtml("#1F2530"),
+            FlatStyle = FlatStyle.Flat,
+            Margin = new Padding(0)
+        };
+
+        button.FlatAppearance.BorderSize = 0;
+        return button;
     }
 }
