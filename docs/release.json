@@ -1,8 +1,8 @@
 ﻿{
     "productName":  "DJ Electric Invoice Generator",
-    "version":  "1.0.6",
-    "publishedAtUtc":  "2026-03-15T20:04:47.3942815Z",
-    "packageUrl":  "downloads/app-package.zip?v=1.0.6",
-    "installerUrl":  "downloads/DJ-Electric-Invoice-Generator-Setup.zip?v=1.0.6",
-    "releaseNotes":  "1.0.6 adds a manual Check for updates button and makes the startup update check more reliable, while keeping the invoice default and installer visibility fixes."
+    "version":  "1.0.7",
+    "publishedAtUtc":  "2026-03-15T20:17:12.1172364Z",
+    "packageUrl":  "downloads/app-package.zip?v=1.0.7",
+    "installerUrl":  "downloads/DJ-Electric-Invoice-Generator-Setup.zip?v=1.0.7",
+    "releaseNotes":  "1.0.7 adds a Print invoice button, uses a dedicated printable invoice document, and keeps the output actions together with the existing download and update controls."
 }

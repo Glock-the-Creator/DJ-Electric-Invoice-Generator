@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Threading;
 using System.Windows.Media;
 using System.Windows.Interop;
@@ -92,6 +93,34 @@ public partial class MainWindow : Window
                 this,
                 ex.Message,
                 "Download Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+    }
+
+    private void PrintInvoiceButton_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new PrintDialog();
+        if (dialog.ShowDialog() != true)
+        {
+            viewModel.StatusMessage = "Print canceled.";
+            return;
+        }
+
+        try
+        {
+            viewModel.StatusMessage = "Sending invoice to printer...";
+            InvoicePrintService.PrintInvoice(viewModel, dialog);
+            var printerName = dialog.PrintQueue?.FullName ?? "selected printer";
+            viewModel.StatusMessage = $"Invoice sent to {printerName}.";
+        }
+        catch (Exception ex)
+        {
+            viewModel.StatusMessage = "Print failed.";
+            MessageBox.Show(
+                this,
+                ex.Message,
+                "Print Error",
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
         }

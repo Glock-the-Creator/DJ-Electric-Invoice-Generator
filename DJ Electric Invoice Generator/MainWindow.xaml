@@ -306,8 +306,8 @@
 
                             <Border Height="1" Background="{StaticResource LineBrush}" Margin="0,14,0,12" />
 
-                            <TextBlock Text="Download" Style="{StaticResource SectionTitle}" />
-                            <TextBlock Text="Downloads a local PDF to Documents\DJ Electric Invoices with the date and exact time in the file name for easy sorting."
+                            <TextBlock Text="Output" Style="{StaticResource SectionTitle}" />
+                            <TextBlock Text="Download a local PDF or print the current invoice with the same live values shown in the preview."
                                        Margin="0,8,0,0"
                                        Foreground="{StaticResource MutedBrush}"
                                        TextWrapping="Wrap" />
@@ -317,6 +317,11 @@
                                 <Button Style="{StaticResource PrimaryButton}"
                                         Content="Download invoice"
                                         Click="DownloadInvoiceButton_Click"
+                                        HorizontalAlignment="Left" />
+                                <Button Style="{StaticResource SecondaryButton}"
+                                        Content="Print invoice"
+                                        Click="PrintInvoiceButton_Click"
+                                        Margin="10,0,0,0"
                                         HorizontalAlignment="Left" />
                                 <Button Style="{StaticResource SecondaryButton}"
                                         Content="Check for updates"
