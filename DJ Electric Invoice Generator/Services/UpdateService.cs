@@ -110,25 +110,30 @@ public static class UpdateService
 
     public static bool TryLaunchInstalledUpdater(string packagePath, string installDirectory, bool restartAfterUpdate)
     {
-        var setupPath = Path.Combine(installDirectory, InstalledSetupFileName);
+        var normalizedInstallDirectory = NormalizeDirectoryPath(installDirectory);
+        var setupPath = Path.Combine(normalizedInstallDirectory, InstalledSetupFileName);
         if (!File.Exists(setupPath))
         {
             return false;
         }
 
-        var arguments = $"--apply-update \"{packagePath}\" --install-dir \"{installDirectory}\"";
-        if (restartAfterUpdate)
-        {
-            arguments += " --restart";
-        }
-
-        Process.Start(new ProcessStartInfo
+        var startInfo = new ProcessStartInfo
         {
             FileName = setupPath,
-            Arguments = arguments,
-            WorkingDirectory = installDirectory,
-            UseShellExecute = true
-        });
+            WorkingDirectory = normalizedInstallDirectory,
+            UseShellExecute = false
+        };
+
+        startInfo.ArgumentList.Add("--apply-update");
+        startInfo.ArgumentList.Add(packagePath);
+        startInfo.ArgumentList.Add("--install-dir");
+        startInfo.ArgumentList.Add(normalizedInstallDirectory);
+        if (restartAfterUpdate)
+        {
+            startInfo.ArgumentList.Add("--restart");
+        }
+
+        Process.Start(startInfo);
 
         return true;
     }
@@ -184,5 +189,11 @@ public static class UpdateService
     private static string SanitizeVersion(Version version)
     {
         return version.ToString().Replace('.', '-');
+    }
+
+    private static string NormalizeDirectoryPath(string path)
+    {
+        var fullPath = Path.GetFullPath(path);
+        return Path.TrimEndingDirectorySeparator(fullPath);
     }
 }

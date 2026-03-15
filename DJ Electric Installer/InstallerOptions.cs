@@ -47,7 +47,7 @@ internal sealed class InstallerOptions
                 case "--install-dir":
                     if (i + 1 < args.Length)
                     {
-                        installDirectory = args[++i];
+                        installDirectory = NormalizeInstallDirectory(args[++i], ref restartAfterUpdate);
                     }
                     break;
 
@@ -68,5 +68,31 @@ internal sealed class InstallerOptions
             InstallDirectory = installDirectory,
             RestartAfterUpdate = restartAfterUpdate
         };
+    }
+
+    private static string NormalizeInstallDirectory(string rawValue, ref bool restartAfterUpdate)
+    {
+        if (string.IsNullOrWhiteSpace(rawValue))
+        {
+            return InstallService.DefaultInstallDirectory;
+        }
+
+        var trimmed = rawValue.Trim();
+        const string appendedRestart = "\" --restart";
+
+        if (trimmed.EndsWith(appendedRestart, StringComparison.OrdinalIgnoreCase))
+        {
+            restartAfterUpdate = true;
+            trimmed = trimmed[..^appendedRestart.Length];
+        }
+
+        trimmed = trimmed.Trim().Trim('"');
+
+        if (string.IsNullOrWhiteSpace(trimmed))
+        {
+            return InstallService.DefaultInstallDirectory;
+        }
+
+        return Path.TrimEndingDirectorySeparator(trimmed);
     }
 }
