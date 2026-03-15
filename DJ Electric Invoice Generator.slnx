@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="DJ Electric Invoice Generator/DJ Electric Invoice Generator.csproj" />
+  <Project Path="DJ Electric Installer/DJ Electric Installer.csproj" />
+</Solution>

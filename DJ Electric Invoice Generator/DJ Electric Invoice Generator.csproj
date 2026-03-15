@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <RootNamespace>DJ_Electric_Invoice_Generator</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Assets\lightbulb.ico</ApplicationIcon>
+    <UpdateFeedUrl Condition="'$(UpdateFeedUrl)' == ''"></UpdateFeedUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="UglyToad.PdfPig" Version="1.7.0-custom-5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Copy of _DJ Electric Invoice - Master Copy - Simple Invoice (58).pdf"
+                      LogicalName="DJ_Electric_Invoice_Generator.Resources.InvoiceTemplate.pdf" />
+    <Resource Include="Assets\lightbulb.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>UpdateFeedUrl</_Parameter1>
+      <_Parameter2>$(UpdateFeedUrl)</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>DJ Electric Invoice Generator Setup</AssemblyName>
+    <RootNamespace>DJ_Electric_Invoice_Generator_Installer</RootNamespace>
+    <ApplicationIcon>..\DJ Electric Invoice Generator\Assets\lightbulb.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\DJ Electric Invoice Generator\Assets\lightbulb.ico">
+      <Link>Assets\lightbulb.ico</Link>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

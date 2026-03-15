@@ -1,0 +1,6 @@
+.vs/
+.codex_tmp/
+artifacts/
+*.user
+**/bin/
+**/obj/
