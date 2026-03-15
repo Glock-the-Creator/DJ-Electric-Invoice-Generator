@@ -100,19 +100,24 @@ public partial class MainWindow : Window
 
     private void PrintInvoiceButton_Click(object sender, RoutedEventArgs e)
     {
-        var dialog = new PrintDialog();
-        if (dialog.ShowDialog() != true)
-        {
-            viewModel.StatusMessage = "Print canceled.";
-            return;
-        }
+        viewModel.StatusMessage = "Opening print preview...";
 
         try
         {
-            viewModel.StatusMessage = "Sending invoice to printer...";
-            InvoicePrintService.PrintInvoice(viewModel, dialog);
-            var printerName = dialog.PrintQueue?.FullName ?? "selected printer";
-            viewModel.StatusMessage = $"Invoice sent to {printerName}.";
+            var previewWindow = new PrintPreviewWindow(viewModel)
+            {
+                Owner = this
+            };
+
+            var result = previewWindow.ShowDialog();
+            if (result == true)
+            {
+                var printerName = previewWindow.LastPrintedPrinterName ?? "selected printer";
+                viewModel.StatusMessage = $"Invoice sent to {printerName}.";
+                return;
+            }
+
+            viewModel.StatusMessage = "Print preview closed.";
         }
         catch (Exception ex)
         {

@@ -307,7 +307,7 @@
                             <Border Height="1" Background="{StaticResource LineBrush}" Margin="0,14,0,12" />
 
                             <TextBlock Text="Output" Style="{StaticResource SectionTitle}" />
-                            <TextBlock Text="Download a local PDF or print the current invoice with the same live values shown in the preview."
+                            <TextBlock Text="Download a local PDF, open a print preview, or check for app updates."
                                        Margin="0,8,0,0"
                                        Foreground="{StaticResource MutedBrush}"
                                        TextWrapping="Wrap" />

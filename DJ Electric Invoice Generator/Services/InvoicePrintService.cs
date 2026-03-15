@@ -27,6 +27,12 @@ public static class InvoicePrintService
         dialog.PrintDocument(paginator, BuildJobDescription(model));
     }
 
+    public static FlowDocument CreatePreviewDocument(InvoiceViewModel model)
+    {
+        ArgumentNullException.ThrowIfNull(model);
+        return BuildDocument(model, DefaultPageWidth, DefaultPageHeight);
+    }
+
     public static void SaveInvoiceAsXps(InvoiceViewModel model, string outputPath)
     {
         ArgumentNullException.ThrowIfNull(model);
