@@ -2,7 +2,6 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Threading;
 using System.Windows.Media;
 using System.Windows.Interop;
@@ -99,26 +98,16 @@ public partial class MainWindow : Window
         }
     }
 
-    private void PrintInvoiceButton_Click(object sender, RoutedEventArgs e)
+    private async void PrintInvoiceButton_Click(object sender, RoutedEventArgs e)
     {
-        viewModel.StatusMessage = "Opening print preview...";
+        viewModel.StatusMessage = "Opening print dialog...";
 
         try
         {
-            var previewWindow = new PrintPreviewWindow(viewModel)
-            {
-                Owner = this
-            };
-
-            var result = previewWindow.ShowDialog();
-            if (result == true)
-            {
-                var printerName = previewWindow.LastPrintedPrinterName ?? "selected printer";
-                viewModel.StatusMessage = $"Invoice sent to {printerName}.";
-                return;
-            }
-
-            viewModel.StatusMessage = "Print preview closed.";
+            using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(12));
+            var html = InvoiceDocumentBuilder.BuildHtml(viewModel);
+            await InvoiceBrowserPrintService.ShowPrintUiAsync(PrintWebView, html, timeout.Token);
+            viewModel.StatusMessage = "Print dialog opened.";
         }
         catch (Exception ex)
         {

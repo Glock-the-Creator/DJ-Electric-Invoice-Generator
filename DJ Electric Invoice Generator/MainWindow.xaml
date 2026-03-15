@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         mc:Ignorable="d"
         Title="DJ Electric Invoice Generator"
         Height="900"
@@ -693,6 +694,13 @@
                 </Border>
                 </Viewbox>
             </ScrollViewer>
+
+            <wv2:WebView2 x:Name="PrintWebView"
+                          Width="1"
+                          Height="1"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Bottom"
+                          IsHitTestVisible="False" />
         </Grid>
     </Grid>
 </Window>
