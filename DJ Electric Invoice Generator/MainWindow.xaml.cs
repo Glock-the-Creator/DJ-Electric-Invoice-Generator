@@ -104,10 +104,16 @@ public partial class MainWindow : Window
 
         try
         {
-            using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(12));
-            var html = InvoiceDocumentBuilder.BuildHtml(viewModel);
-            await InvoiceBrowserPrintService.ShowPrintUiAsync(PrintWebView, html, timeout.Token);
-            viewModel.StatusMessage = "Print dialog opened.";
+            var dialog = new PrintDialog();
+            if (dialog.ShowDialog() != true)
+            {
+                viewModel.StatusMessage = "Print canceled.";
+                return;
+            }
+
+            InvoicePrintService.PrintInvoice(viewModel, dialog);
+            var printerName = dialog.PrintQueue?.FullName ?? "selected printer";
+            viewModel.StatusMessage = $"Invoice sent to {printerName}.";
         }
         catch (Exception ex)
         {

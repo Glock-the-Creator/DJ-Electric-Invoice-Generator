@@ -1,8 +1,8 @@
 ﻿{
     "productName":  "DJ Electric Invoice Generator",
-    "version":  "1.0.13",
-    "publishedAtUtc":  "2026-03-15T21:36:51.5756118Z",
-    "packageUrl":  "downloads/app-package.zip?v=1.0.13",
-    "installerUrl":  "downloads/DJ-Electric-Invoice-Generator-Setup.zip?v=1.0.13",
-    "releaseNotes":  "1.0.13 removes the custom print preview window and opens the browser-backed print dialog directly from the app, while keeping the invoice content loaded into the print UI."
+    "version":  "1.0.14",
+    "publishedAtUtc":  "2026-03-15T21:43:42.3007257Z",
+    "packageUrl":  "downloads/app-package.zip?v=1.0.14",
+    "installerUrl":  "downloads/DJ-Electric-Invoice-Generator-Setup.zip?v=1.0.14",
+    "releaseNotes":  "1.0.14 removes the browser-backed print flow and uses the actual Windows print dialog so installed printers show up directly in the app."
 }
