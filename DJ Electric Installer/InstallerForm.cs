@@ -93,8 +93,8 @@ internal sealed class InstallerForm : Form
         };
 
         installButton = CreatePrimaryButton("Install");
-        installButton.Width = 132;
-        installButton.Height = 38;
+        installButton.Width = 148;
+        installButton.Height = 42;
         installButton.Anchor = AnchorStyles.Right | AnchorStyles.Top;
         installButton.Click += InstallButton_Click;
 
@@ -220,10 +220,16 @@ internal sealed class InstallerForm : Form
             BackColor = ColorTranslator.FromHtml("#1F2530"),
             ForeColor = Color.White,
             FlatStyle = FlatStyle.Flat,
+            UseVisualStyleBackColor = false,
+            Font = new Font("Segoe UI Semibold", 10f, FontStyle.Bold),
+            Padding = new Padding(16, 0, 16, 0),
             Margin = new Padding(0)
         };
 
-        button.FlatAppearance.BorderSize = 0;
+        button.FlatAppearance.BorderSize = 1;
+        button.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#1F2530");
+        button.FlatAppearance.MouseOverBackColor = ColorTranslator.FromHtml("#2B3240");
+        button.FlatAppearance.MouseDownBackColor = ColorTranslator.FromHtml("#141922");
         return button;
     }
 
@@ -235,10 +241,15 @@ internal sealed class InstallerForm : Form
             BackColor = ColorTranslator.FromHtml("#F2E4C1"),
             ForeColor = ColorTranslator.FromHtml("#1F2530"),
             FlatStyle = FlatStyle.Flat,
+            UseVisualStyleBackColor = false,
+            Font = new Font("Segoe UI Semibold", 9.5f, FontStyle.Bold),
             Margin = new Padding(0)
         };
 
-        button.FlatAppearance.BorderSize = 0;
+        button.FlatAppearance.BorderSize = 1;
+        button.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#CDA86A");
+        button.FlatAppearance.MouseOverBackColor = ColorTranslator.FromHtml("#EAD9AF");
+        button.FlatAppearance.MouseDownBackColor = ColorTranslator.FromHtml("#E0CB97");
         return button;
     }
 }

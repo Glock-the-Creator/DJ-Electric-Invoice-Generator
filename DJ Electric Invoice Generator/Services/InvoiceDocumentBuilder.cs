@@ -8,11 +8,19 @@ public static class InvoiceDocumentBuilder
 {
     public static string BuildHtml(InvoiceViewModel model)
     {
+        var documentTitle = BuildDocumentTitle(model);
+        var documentSummary = BuildDocumentSummary(model);
         var sb = new StringBuilder();
         sb.AppendLine("<!doctype html>");
         sb.AppendLine("<html lang=\"en\">");
         sb.AppendLine("<head>");
         sb.AppendLine("<meta charset=\"utf-8\" />");
+        sb.AppendLine("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />");
+        sb.AppendLine($"<title>{Html(documentTitle)}</title>");
+        sb.AppendLine($"<meta name=\"title\" content=\"{Html(documentTitle)}\" />");
+        sb.AppendLine($"<meta name=\"description\" content=\"{Html(documentSummary)}\" />");
+        sb.AppendLine($"<meta name=\"author\" content=\"{Html(model.CompanyName)}\" />");
+        sb.AppendLine("<meta name=\"generator\" content=\"DJ Electric Invoice Generator\" />");
         sb.AppendLine("<style>");
         sb.AppendLine("@page{size:Letter;margin:.45in;}");
         sb.AppendLine("html,body{margin:0;padding:0;}");
@@ -150,6 +158,54 @@ public static class InvoiceDocumentBuilder
         return sb.ToString();
     }
 
+    private static string BuildDocumentTitle(InvoiceViewModel model)
+    {
+        var billTo = GetFirstMeaningfulLine(model.BillTo);
+        var invoiceDate = NormalizeInline(model.InvoiceDate);
+
+        if (!string.IsNullOrWhiteSpace(billTo) && !string.IsNullOrWhiteSpace(invoiceDate))
+        {
+            return $"DJ Electric Invoice - {billTo} - {invoiceDate}";
+        }
+
+        if (!string.IsNullOrWhiteSpace(billTo))
+        {
+            return $"DJ Electric Invoice - {billTo}";
+        }
+
+        if (!string.IsNullOrWhiteSpace(invoiceDate))
+        {
+            return $"DJ Electric Invoice - {invoiceDate}";
+        }
+
+        return "DJ Electric Invoice";
+    }
+
+    private static string BuildDocumentSummary(InvoiceViewModel model)
+    {
+        var billTo = GetFirstMeaningfulLine(model.BillTo);
+        var invoiceDate = NormalizeInline(model.InvoiceDate);
+        var summaryParts = new List<string>();
+
+        if (!string.IsNullOrWhiteSpace(billTo))
+        {
+            summaryParts.Add($"Invoice for {billTo}");
+        }
+        else
+        {
+            summaryParts.Add("DJ Electric invoice");
+        }
+
+        if (!string.IsNullOrWhiteSpace(invoiceDate))
+        {
+            summaryParts.Add($"dated {invoiceDate}");
+        }
+
+        summaryParts.Add($"total {NormalizeInline(model.TotalDisplay)}");
+
+        return string.Join(", ", summaryParts) + ".";
+    }
+
     private static string Html(string? value)
     {
         return WebUtility.HtmlEncode(value ?? string.Empty);
@@ -158,5 +214,32 @@ public static class InvoiceDocumentBuilder
     private static string HtmlLines(string? value)
     {
         return Html(value).Replace("\r\n", "<br />").Replace("\n", "<br />");
+    }
+
+    private static string GetFirstMeaningfulLine(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return string.Empty;
+        }
+
+        foreach (var line in value.Split(new[] { "\r\n", "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries))
+        {
+            var trimmed = NormalizeInline(line);
+            if (!string.IsNullOrWhiteSpace(trimmed))
+            {
+                return trimmed;
+            }
+        }
+
+        return string.Empty;
+    }
+
+    private static string NormalizeInline(string? value)
+    {
+        return string.Join(
+            " ",
+            (value ?? string.Empty)
+                .Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
     }
 }

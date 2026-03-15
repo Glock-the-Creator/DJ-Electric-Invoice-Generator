@@ -453,16 +453,6 @@ public sealed class InvoiceViewModel : INotifyPropertyChanged
             CompanyEmail = defaults.CompanyEmail;
         }
 
-        if (!string.IsNullOrWhiteSpace(defaults.InvoiceDate))
-        {
-            InvoiceDate = defaults.InvoiceDate;
-        }
-
-        if (!string.IsNullOrWhiteSpace(defaults.BidNumber))
-        {
-            BidNumber = defaults.BidNumber;
-        }
-
         if (!string.IsNullOrWhiteSpace(defaults.PaymentNote))
         {
             PaymentNote = defaults.PaymentNote;

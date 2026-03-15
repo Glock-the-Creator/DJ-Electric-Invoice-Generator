@@ -30,17 +30,19 @@ public static class PdfExportService
         try
         {
             var fileUri = new Uri(tempHtmlPath).AbsoluteUri;
+            var browserArguments = BuildBrowserArguments(outputPdfPath, fileUri, useNewHeadless: true);
             var attemptWithNewHeadless = await RunBrowserAsync(
                 browserPath,
-                $"--headless=new --disable-gpu --disable-breakpad --disable-crash-reporter --allow-file-access-from-files --no-pdf-header-footer --print-to-pdf=\"{outputPdfPath}\" \"{fileUri}\"",
+                browserArguments,
                 outputPdfPath,
                 cancellationToken);
 
             if (!attemptWithNewHeadless.Success)
             {
+                var fallbackArguments = BuildBrowserArguments(outputPdfPath, fileUri, useNewHeadless: false);
                 var fallbackAttempt = await RunBrowserAsync(
                     browserPath,
-                    $"--headless --disable-gpu --disable-breakpad --disable-crash-reporter --allow-file-access-from-files --no-pdf-header-footer --print-to-pdf=\"{outputPdfPath}\" \"{fileUri}\"",
+                    fallbackArguments,
                     outputPdfPath,
                     cancellationToken);
 
@@ -69,6 +71,26 @@ public static class PdfExportService
     private static string? FindBrowserPath()
     {
         return CandidateBrowserPaths.FirstOrDefault(File.Exists);
+    }
+
+    private static string BuildBrowserArguments(string outputPdfPath, string fileUri, bool useNewHeadless)
+    {
+        var headlessMode = useNewHeadless ? "--headless=new" : "--headless";
+        return string.Join(
+            " ",
+            new[]
+            {
+                headlessMode,
+                "--disable-gpu",
+                "--disable-breakpad",
+                "--disable-crash-reporter",
+                "--allow-file-access-from-files",
+                "--no-pdf-header-footer",
+                "--export-tagged-pdf",
+                "--generate-pdf-document-outline",
+                $"--print-to-pdf=\"{outputPdfPath}\"",
+                $"\"{fileUri}\""
+            });
     }
 
     private static async Task<PdfExportAttemptResult> RunBrowserAsync(

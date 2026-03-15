@@ -52,16 +52,10 @@ public static class TemplateLoader
 
     public static InvoiceTemplateDefaults LoadFromResources()
     {
-        using var templateStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(TemplateResourceName);
-        if (templateStream == null)
+        return MergeWithFallback(new InvoiceTemplateDefaults
         {
-            return MergeWithFallback(new InvoiceTemplateDefaults
-            {
-                StatusMessage = "Template PDF not found in app resources. Using defaults."
-            });
-        }
-
-        return LoadFromStream(templateStream, "Template defaults loaded from app resources.");
+            StatusMessage = "Template defaults loaded from app resources."
+        });
     }
 
     public static InvoiceTemplateDefaults LoadFromPdf(string path)
