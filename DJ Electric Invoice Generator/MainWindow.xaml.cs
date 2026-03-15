@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using System.Windows.Media;
 using System.Windows.Interop;
 using DJ_Electric_Invoice_Generator.Models;
@@ -53,7 +54,7 @@ public partial class MainWindow : Window
         if (!updateCheckStarted)
         {
             updateCheckStarted = true;
-            _ = CheckForUpdatesAsync();
+            _ = ScheduleStartupUpdateCheckAsync();
         }
     }
 
@@ -94,6 +95,11 @@ public partial class MainWindow : Window
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
         }
+    }
+
+    private async void CheckForUpdatesButton_Click(object sender, RoutedEventArgs e)
+    {
+        await CheckForUpdatesAsync(showUpToDateStatus: true);
     }
 
     private void BillToTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -201,7 +207,21 @@ public partial class MainWindow : Window
         return color.R | (color.G << 8) | (color.B << 16);
     }
 
-    private async Task CheckForUpdatesAsync()
+    private async Task ScheduleStartupUpdateCheckAsync()
+    {
+        try
+        {
+            await Task.Delay(TimeSpan.FromSeconds(1.2));
+            await Dispatcher.InvokeAsync(
+                async () => await CheckForUpdatesAsync(showUpToDateStatus: false),
+                DispatcherPriority.Background);
+        }
+        catch
+        {
+        }
+    }
+
+    private async Task CheckForUpdatesAsync(bool showUpToDateStatus)
     {
         AppUpdateInfo? update = null;
 
@@ -210,13 +230,24 @@ public partial class MainWindow : Window
             using var checkTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(6));
             update = await UpdateService.CheckForUpdateAsync(checkTimeout.Token);
         }
-        catch
+        catch (Exception ex)
         {
+            if (showUpToDateStatus)
+            {
+                viewModel.StatusMessage = $"Update check failed: {ex.Message}";
+            }
+
             return;
         }
 
         if (update == null)
         {
+            if (showUpToDateStatus)
+            {
+                var currentVersion = UpdateService.GetCurrentVersion().ToString(3);
+                viewModel.StatusMessage = $"You're already on the latest version ({currentVersion}).";
+            }
+
             return;
         }
 

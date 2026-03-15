@@ -1,8 +1,8 @@
 ﻿{
     "productName":  "DJ Electric Invoice Generator",
-    "version":  "1.0.5",
-    "publishedAtUtc":  "2026-03-15T19:54:21.8955671Z",
-    "packageUrl":  "downloads/app-package.zip?v=1.0.5",
-    "installerUrl":  "downloads/DJ-Electric-Invoice-Generator-Setup.zip?v=1.0.5",
-    "releaseNotes":  "1.0.5 fixes the bad startup defaults so bid amount starts empty, the invoice header no longer fills with template label text, and the installer install button remains visible."
+    "version":  "1.0.6",
+    "publishedAtUtc":  "2026-03-15T20:04:47.3942815Z",
+    "packageUrl":  "downloads/app-package.zip?v=1.0.6",
+    "installerUrl":  "downloads/DJ-Electric-Invoice-Generator-Setup.zip?v=1.0.6",
+    "releaseNotes":  "1.0.6 adds a manual Check for updates button and makes the startup update check more reliable, while keeping the invoice default and installer visibility fixes."
 }
