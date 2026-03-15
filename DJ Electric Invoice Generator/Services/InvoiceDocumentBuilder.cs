@@ -88,6 +88,11 @@ public static class InvoiceDocumentBuilder
         sb.AppendLine("<h2>INVOICE</h2>");
         sb.AppendLine("<div class=\"label\">Date</div>");
         sb.AppendLine($"<div class=\"value\">{Html(model.InvoiceDate)}</div>");
+        if (!string.IsNullOrWhiteSpace(model.InvoiceNumber))
+        {
+            sb.AppendLine("<div class=\"label\" style=\"margin-top:14px;\">Invoice #</div>");
+            sb.AppendLine($"<div class=\"value\">{Html(model.InvoiceNumber)}</div>");
+        }
         sb.AppendLine("</div>");
         sb.AppendLine("</div>");
 
@@ -162,6 +167,17 @@ public static class InvoiceDocumentBuilder
     {
         var billTo = GetFirstMeaningfulLine(model.BillTo);
         var invoiceDate = NormalizeInline(model.InvoiceDate);
+        var invoiceNumber = NormalizeInline(model.InvoiceNumber);
+
+        if (!string.IsNullOrWhiteSpace(invoiceNumber))
+        {
+            if (!string.IsNullOrWhiteSpace(billTo))
+            {
+                return $"DJ Electric Invoice {invoiceNumber} - {billTo}";
+            }
+
+            return $"DJ Electric Invoice {invoiceNumber}";
+        }
 
         if (!string.IsNullOrWhiteSpace(billTo) && !string.IsNullOrWhiteSpace(invoiceDate))
         {
@@ -185,6 +201,7 @@ public static class InvoiceDocumentBuilder
     {
         var billTo = GetFirstMeaningfulLine(model.BillTo);
         var invoiceDate = NormalizeInline(model.InvoiceDate);
+        var invoiceNumber = NormalizeInline(model.InvoiceNumber);
         var summaryParts = new List<string>();
 
         if (!string.IsNullOrWhiteSpace(billTo))
@@ -199,6 +216,11 @@ public static class InvoiceDocumentBuilder
         if (!string.IsNullOrWhiteSpace(invoiceDate))
         {
             summaryParts.Add($"dated {invoiceDate}");
+        }
+
+        if (!string.IsNullOrWhiteSpace(invoiceNumber))
+        {
+            summaryParts.Add($"invoice number {invoiceNumber}");
         }
 
         summaryParts.Add($"total {NormalizeInline(model.TotalDisplay)}");

@@ -50,7 +50,8 @@ public partial class MainWindow : Window
         }
 
         viewModel.StatusMessage = GetReadyStatusMessage();
-        AdjustBillToBox(BillToTextBox);
+        AdjustAutoHeightTextBox(BillToTextBox);
+        AdjustAutoHeightTextBox(InvoiceNumberTextBox);
 
         if (!updateCheckStarted)
         {
@@ -140,7 +141,7 @@ public partial class MainWindow : Window
     {
         if (sender is TextBox textBox)
         {
-            AdjustBillToBox(textBox);
+            AdjustAutoHeightTextBox(textBox);
         }
     }
 
@@ -148,11 +149,27 @@ public partial class MainWindow : Window
     {
         if (sender is TextBox textBox)
         {
-            AdjustBillToBox(textBox);
+            AdjustAutoHeightTextBox(textBox);
         }
     }
 
-    private static void AdjustBillToBox(TextBox textBox)
+    private void InvoiceNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (sender is TextBox textBox)
+        {
+            AdjustAutoHeightTextBox(textBox);
+        }
+    }
+
+    private void InvoiceNumberTextBox_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (sender is TextBox textBox)
+        {
+            AdjustAutoHeightTextBox(textBox);
+        }
+    }
+
+    private static void AdjustAutoHeightTextBox(TextBox textBox)
     {
         const double singleLineHeight = 38d;
 

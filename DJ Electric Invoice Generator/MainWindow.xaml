@@ -175,6 +175,20 @@
                             <TextBlock Text="Invoice" Style="{StaticResource SectionTitle}" />
 
                             <StackPanel Width="220" HorizontalAlignment="Left">
+                                <TextBlock Text="Invoice number" Style="{StaticResource FieldLabel}" />
+                                <TextBox x:Name="InvoiceNumberTextBox"
+                                         AutomationProperties.AutomationId="InvoiceNumberTextBox"
+                                         Style="{StaticResource FieldBox}"
+                                         Text="{Binding InvoiceNumber, UpdateSourceTrigger=PropertyChanged}"
+                                         TextWrapping="Wrap"
+                                         VerticalScrollBarVisibility="Disabled"
+                                         MinHeight="38"
+                                         MaxHeight="86"
+                                         TextChanged="InvoiceNumberTextBox_TextChanged"
+                                         SizeChanged="InvoiceNumberTextBox_SizeChanged" />
+                            </StackPanel>
+
+                            <StackPanel Width="220" HorizontalAlignment="Left">
                                 <TextBlock Text="Bid amount" Style="{StaticResource FieldLabel}" />
                                 <Border Style="{StaticResource CurrencyFieldShell}">
                                     <DockPanel LastChildFill="True">
@@ -420,6 +434,30 @@
                                            FontWeight="SemiBold"
                                            Foreground="{StaticResource InkBrush}"
                                            HorizontalAlignment="Right" />
+                                <StackPanel Margin="0,14,0,0">
+                                    <StackPanel.Style>
+                                        <Style TargetType="StackPanel">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding InvoiceNumber}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
+                                    <TextBlock Text="INVOICE #"
+                                               Margin="0,0,0,2"
+                                               FontSize="11"
+                                               Foreground="{StaticResource MutedBrush}"
+                                               HorizontalAlignment="Right" />
+                                    <TextBlock Text="{Binding InvoiceNumber}"
+                                               FontSize="15"
+                                               FontWeight="SemiBold"
+                                               Foreground="{StaticResource InkBrush}"
+                                               TextWrapping="Wrap"
+                                               MaxWidth="160"
+                                               HorizontalAlignment="Right" />
+                                </StackPanel>
                             </StackPanel>
                         </Grid>
 

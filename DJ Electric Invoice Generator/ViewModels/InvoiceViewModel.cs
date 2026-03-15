@@ -13,6 +13,7 @@ public sealed class InvoiceViewModel : INotifyPropertyChanged
     private string companyPhone = "989-239-9040";
     private string companyEmail = string.Empty;
     private string invoiceDate = DateTime.Today.ToString("MM/dd/yy", CultureInfo.CurrentCulture);
+    private string invoiceNumber = string.Empty;
     private string bidNumber = string.Empty;
     private string billTo = string.Empty;
     private string balanceText = string.Empty;
@@ -128,6 +129,21 @@ public sealed class InvoiceViewModel : INotifyPropertyChanged
 
             invoiceDate = value;
             OnPropertyChanged(nameof(InvoiceDate));
+        }
+    }
+
+    public string InvoiceNumber
+    {
+        get => invoiceNumber;
+        set
+        {
+            if (invoiceNumber == value)
+            {
+                return;
+            }
+
+            invoiceNumber = value;
+            OnPropertyChanged(nameof(InvoiceNumber));
         }
     }
 
