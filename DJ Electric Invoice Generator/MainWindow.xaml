@@ -428,24 +428,34 @@
 
                             <StackPanel Grid.Column="1"
                                         HorizontalAlignment="Right">
-                                <TextBlock Text="{Binding InvoiceNumber}"
-                                           FontFamily="Segoe UI Semibold"
-                                           FontSize="34"
-                                           Foreground="{StaticResource AccentDarkBrush}"
-                                           TextWrapping="Wrap"
-                                           MaxWidth="180"
-                                           HorizontalAlignment="Right">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="{Binding InvoiceNumber}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding InvoiceNumber}" Value="">
-                                                    <Setter Property="Text" Value="INVOICE" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Right"
+                                            MaxWidth="220">
+                                    <TextBlock Text="INVOICE"
+                                               FontFamily="Segoe UI Semibold"
+                                               FontSize="34"
+                                               Foreground="{StaticResource AccentDarkBrush}"
+                                               HorizontalAlignment="Right" />
+                                    <TextBlock Text="{Binding InvoiceNumber}"
+                                               Margin="10,0,0,0"
+                                               FontFamily="Segoe UI Semibold"
+                                               FontSize="34"
+                                               Foreground="{StaticResource AccentDarkBrush}"
+                                               TextWrapping="Wrap"
+                                               MaxWidth="120"
+                                               HorizontalAlignment="Right">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding InvoiceNumber}" Value="">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
                                 <TextBlock Text="DATE"
                                            Margin="0,14,0,2"
                                            FontSize="11"

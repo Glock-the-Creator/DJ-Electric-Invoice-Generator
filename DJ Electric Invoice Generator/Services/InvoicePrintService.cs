@@ -153,14 +153,22 @@ public static class InvoicePrintService
             Padding = new Thickness(0)
         };
 
-        section.Blocks.Add(new Paragraph(new Run(BuildInvoiceHeaderTitle(model)))
+        var invoiceHeader = new Paragraph
         {
             Margin = new Thickness(0),
             FontSize = 26,
             FontWeight = FontWeights.Bold,
             TextAlignment = TextAlignment.Right,
             Foreground = CreateBrush("#8B5E1A")
-        });
+        };
+        invoiceHeader.Inlines.Add(new Run("INVOICE"));
+        var invoiceNumber = model.InvoiceNumber?.Trim();
+        if (!string.IsNullOrWhiteSpace(invoiceNumber))
+        {
+            invoiceHeader.Inlines.Add(new Run($" {invoiceNumber}"));
+        }
+
+        section.Blocks.Add(invoiceHeader);
 
         section.Blocks.Add(new Paragraph(new Run("DATE"))
         {
@@ -181,11 +189,6 @@ public static class InvoicePrintService
         });
 
         return section;
-    }
-
-    private static string BuildInvoiceHeaderTitle(InvoiceViewModel model)
-    {
-        return string.IsNullOrWhiteSpace(model.InvoiceNumber) ? "INVOICE" : model.InvoiceNumber.Trim();
     }
 
     private static Section BuildBillToSection(InvoiceViewModel model)

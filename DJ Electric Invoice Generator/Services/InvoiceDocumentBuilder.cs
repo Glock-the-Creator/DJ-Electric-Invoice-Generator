@@ -85,7 +85,7 @@ public static class InvoiceDocumentBuilder
         sb.AppendLine("</div>");
         sb.AppendLine("</div>");
         sb.AppendLine("<div class=\"invoice-title\">");
-        sb.AppendLine($"<h2>{Html(BuildInvoiceHeaderTitle(model))}</h2>");
+        sb.AppendLine($"<h2>{BuildInvoiceHeaderTitleHtml(model)}</h2>");
         sb.AppendLine("<div class=\"label\">Date</div>");
         sb.AppendLine($"<div class=\"value\">{Html(model.InvoiceDate)}</div>");
         sb.AppendLine("</div>");
@@ -192,10 +192,12 @@ public static class InvoiceDocumentBuilder
         return "DJ Electric Invoice";
     }
 
-    private static string BuildInvoiceHeaderTitle(InvoiceViewModel model)
+    private static string BuildInvoiceHeaderTitleHtml(InvoiceViewModel model)
     {
         var invoiceNumber = NormalizeInline(model.InvoiceNumber);
-        return string.IsNullOrWhiteSpace(invoiceNumber) ? "INVOICE" : invoiceNumber;
+        return string.IsNullOrWhiteSpace(invoiceNumber)
+            ? "INVOICE"
+            : $"INVOICE <span>{Html(invoiceNumber)}</span>";
     }
 
     private static string BuildDocumentSummary(InvoiceViewModel model)
