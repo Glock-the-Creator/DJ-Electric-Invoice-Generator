@@ -1,8 +1,8 @@
 ﻿{
     "productName":  "DJ Electric Invoice Generator",
-    "version":  "1.0.10",
-    "publishedAtUtc":  "2026-03-15T20:36:43.6017578Z",
-    "packageUrl":  "downloads/app-package.zip?v=1.0.10",
-    "installerUrl":  "downloads/DJ-Electric-Invoice-Generator-Setup.zip?v=1.0.10",
-    "releaseNotes":  "1.0.10 adds an editable invoice number that updates the sheet, PDF export, and print output, and makes the invoice-number textbox grow vertically when the text wraps."
+    "version":  "1.0.11",
+    "publishedAtUtc":  "2026-03-15T20:43:50.5026104Z",
+    "packageUrl":  "downloads/app-package.zip?v=1.0.11",
+    "installerUrl":  "downloads/DJ-Electric-Invoice-Generator-Setup.zip?v=1.0.11",
+    "releaseNotes":  "1.0.11 makes charge description boxes auto-grow when text wraps and uses the invoice number as the main sheet title instead of a separate invoice-number block."
 }

@@ -169,6 +169,22 @@ public partial class MainWindow : Window
         }
     }
 
+    private void ChargeDescriptionTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (sender is TextBox textBox)
+        {
+            AdjustAutoHeightTextBox(textBox);
+        }
+    }
+
+    private void ChargeDescriptionTextBox_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (sender is TextBox textBox)
+        {
+            AdjustAutoHeightTextBox(textBox);
+        }
+    }
+
     private static void AdjustAutoHeightTextBox(TextBox textBox)
     {
         const double singleLineHeight = 38d;

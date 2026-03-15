@@ -153,7 +153,7 @@ public static class InvoicePrintService
             Padding = new Thickness(0)
         };
 
-        section.Blocks.Add(new Paragraph(new Run("INVOICE"))
+        section.Blocks.Add(new Paragraph(new Run(BuildInvoiceHeaderTitle(model)))
         {
             Margin = new Thickness(0),
             FontSize = 26,
@@ -180,28 +180,12 @@ public static class InvoicePrintService
             Foreground = CreateBrush("#1F2530")
         });
 
-        if (!string.IsNullOrWhiteSpace(model.InvoiceNumber))
-        {
-            section.Blocks.Add(new Paragraph(new Run("INVOICE #"))
-            {
-                Margin = new Thickness(0, 14, 0, 0),
-                FontSize = 10,
-                FontWeight = FontWeights.SemiBold,
-                TextAlignment = TextAlignment.Right,
-                Foreground = CreateBrush("#697483")
-            });
-
-            section.Blocks.Add(new Paragraph(new Run(model.InvoiceNumber))
-            {
-                Margin = new Thickness(0, 2, 0, 0),
-                FontSize = 14,
-                FontWeight = FontWeights.SemiBold,
-                TextAlignment = TextAlignment.Right,
-                Foreground = CreateBrush("#1F2530")
-            });
-        }
-
         return section;
+    }
+
+    private static string BuildInvoiceHeaderTitle(InvoiceViewModel model)
+    {
+        return string.IsNullOrWhiteSpace(model.InvoiceNumber) ? "INVOICE" : model.InvoiceNumber.Trim();
     }
 
     private static Section BuildBillToSection(InvoiceViewModel model)
